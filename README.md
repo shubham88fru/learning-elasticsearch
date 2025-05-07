@@ -31,12 +31,6 @@ GET /_cat/indices/*transform*?v
 ### create an index - note PUT not POST
 PUT /products
 
-### get an index
-GET /products
-
-### delete an index
-DELETE /products
-
 ### insert a doc -- Note POST
 POST /books/_doc
 {
@@ -46,4 +40,16 @@ POST /books/_doc
   "genre": "Fiction",
   "rating": 4.9
 }
+
+### get doc by id
+GET /products/_doc/<id>
+
+### get all docs in a index
+GET /products/_search
+
+### get doc containing a query
+GET /products/_search?q=kill
+
+### delete an index
+DELETE /products
 ```
