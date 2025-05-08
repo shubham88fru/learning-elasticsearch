@@ -52,4 +52,25 @@ GET /products/_search?q=kill
 
 ### delete an index
 DELETE /products
+
+
+### update a document with id 4
+POST /books/_update/4
+{
+  "doc": {
+    "year": 1926,
+    "price": 150
+  }
+}
+
+### scripted update
+POST /books/_update/4
+{
+    "script": {
+        "source": "ctx._source.price = ctx._source.price + params.value",
+        "params": {
+          "value": 35
+        }
+    }
+}
 ```
