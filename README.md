@@ -73,4 +73,42 @@ POST /books/_update/4
         }
     }
 }
+
+### Bulk upload
+POST /my-index/_bulk
+{ "create": {} }
+{ "name": "item1" }
+{ "create": {} }
+{ "name": "item2" }
+{ "create": {} }
+{ "name": "item3" }
+
+### Bulk upload with id
+POST /my-index/_bulk
+{ "create": { "_id": 1 } }
+{ "name": "item1" }
+{ "create": { "_id": 2 } }
+{ "name": "item2" }
+{ "create": { "_id": 3 } }
+{ "name": "item3" }
+
+### Bulk create in different indexes.
+POST /_bulk
+{ "create": { "_index": "my-index1", "_id": 1 }}
+{ "name": "item1" }
+{ "create": { "_index": "my-index2", "_id": 2 }}
+{ "name": "item2" }
+{ "create": { "_index": "my-index3", "_id": 3 }}
+{ "name": "item3" }
+
+### Re-index - copy data from old-index to new-index
+POST /_reindex
+{
+  "source": {
+    "index": "old-index"
+  },
+  "dest": {
+    "index": "new-index"
+  }
+}
 ```
