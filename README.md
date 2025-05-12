@@ -112,3 +112,8 @@ POST /_reindex
   }
 }
 ```
+
+## Analyzer
+- Works on the unstructured input data so as to improve search and query results.
+- Acts upon the input during indexing and querying.
+- Has 3 components: Character filters -> Tokenizers -> Token filters.
