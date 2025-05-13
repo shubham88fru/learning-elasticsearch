@@ -116,3 +116,87 @@ POST /_reindex
 - Works on the unstructured input data so as to improve search and query results.
 - Acts upon the input during indexing and querying.
 - Has 3 components: Character filters -> Tokenizers -> Token filters.
+```http request
+
+### analyze api
+### strip html tags etc.
+POST /_analyze
+{
+  "text": "I work with tools like <b>Text-analyzer</b> everyday to process large datasets!!",
+  "char_filter": [
+    {
+      "type": "html_strip"
+    }
+  ]
+}
+
+### map to a different string (exact matches)
+POST /_analyze
+{
+  "text": "I work with tools like <b>Text-analyzer</b> daily to process large datasets!!",
+  "char_filter": [
+    {
+      "type": "mapping",
+      "mappings": [
+        "daily => everyday",
+        "- => _",
+        "!! => ."
+      ]
+    }
+  ]
+}
+
+### combine character filters.
+POST /_analyze
+{
+  "text": "I work with tools like <b>Text-analyzer</b> daily to process large datasets!!",
+  "char_filter": [
+    {
+      "type": "mapping",
+      "mappings": [
+        "daily => everyday",
+        "- => _",
+        "!! => ."
+      ]
+    },
+    {
+      "type": "html_strip"
+    }
+  ]
+}
+
+### pattern replace char filter (regex)
+POST /_analyze
+{
+  "text": "At $100, the product is pretty expensive",
+  "char_filter": [
+    {
+      "type": "pattern_replace",
+      "pattern": "\\$(\\d+)",
+      "replacement": "$1 dollars"
+    }
+  ]
+}
+
+### tokenizer example
+POST /_analyze
+{
+  "text": "This is a <b>sample</b> text to see how tokens are generated.",
+  "tokenizer": "standard",
+  "char_filter": [
+    "html_strip"
+  ]
+}
+
+### Token filters
+POST /_analyze
+{
+  "text": "This is a sample text to see how tokens are gnerated.",
+  "tokenizer": "standard",
+  "filter": [
+    {
+      "type": "uppercase"
+    }
+  ]
+}
+```
