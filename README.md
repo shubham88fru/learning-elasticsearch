@@ -30,6 +30,15 @@ GET /_cat/indices/*transform*?v
 ### create an index - note PUT not POST
 PUT /products
 
+### index with settings.
+PUT /my-index
+{
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0
+    }
+}
+
 ### insert a doc -- Note POST
 POST /books/_doc
 {
@@ -198,5 +207,33 @@ POST /_analyze
       "type": "uppercase"
     }
   ]
+}
+
+### custom analyzer during index creation
+PUT /my-index
+{
+  "settings": {
+    "number_of_replicas": 0,
+    "number_of_shards": 1,
+    "analysis": {
+      "custom-analyzer": {
+        "char_filter": [
+          "html_strip"
+        ],
+        "tokenizer": "standard",
+        "filter": [
+          "uppercase"
+        ]
+      }
+    }
+  }
+}
+
+
+### Using custom analyzer
+POST /my-index/_analyze
+{
+    "text": "<b>Hello world</b>",
+    "analyzer": "cutomer-analyzer" #defaut - standard.
 }
 ```
