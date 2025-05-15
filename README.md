@@ -229,11 +229,35 @@ PUT /my-index
   }
 }
 
-
 ### Using custom analyzer
 POST /my-index/_analyze
 {
     "text": "<b>Hello world</b>",
     "analyzer": "cutomer-analyzer" #defaut - standard.
+}
+```
+
+### Mappings
+- Defines the schema of documents stored in the index (fields and their types)
+
+```http request
+
+### Get mapping of an index. 
+GET /my-index2/_mapping
+
+### Explicit mapping.
+PUT /my-index4
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0
+  },
+  "mappings": {
+    "properties": {
+      "name": { "type": "text" },
+      "age": { "type": "integer" },
+      "email": { "type": "keyword" }
+    }
+  }
 }
 ```
