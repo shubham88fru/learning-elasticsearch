@@ -261,3 +261,75 @@ PUT /my-index4
   }
 }
 ```
+
+### Full text search
+- Elasticsearch provides Query DSL (Domain specific language) to query elasticsearch (Similar to SQL for RDMS)
+- QDSL is in JSON format.
+
+```http request
+### search everything - (like  SELECT * FROM.. in SQL) 
+GET /my-index/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### GET or POST both return the same result.
+POST /my-index/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### Select subset based on `_id` - (like SELECT * FROM .. WHERE .. IN (...) )
+GET /my-index/_search
+{
+  "query": {
+    "ids": {
+      "values": [1, 2]
+    }
+  }
+}
+
+
+### Term query (for exact match) - (like SELECT * FROM .. WHERE name = 'shubham';)
+# Note that term queries are best suited for keyword type fields only because
+# keyword type fields and ingored by analyzer and not modified in inverted index.
+GET /my-index/_search
+{
+  "query": {
+    "term": {
+      "name": {
+        "value": "item1",
+        "case_insensitive": true
+      }
+    }
+  }
+}
+
+# multiple exact match (or)
+GET /my-index/_search
+{
+  "query": {
+    "terms": {
+      "name": ["item1", "item2"]
+    }
+  }
+}
+
+
+### Range queries - SELECT * FROM ... WHERE age > 5 AND age < 10
+GET /my-index/_search
+{
+  "query": {
+    "range": {
+      "cost": {
+        "gte": 100,
+        "lte": 201
+      }
+    }
+  }
+}
+```
