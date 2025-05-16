@@ -332,4 +332,39 @@ GET /my-index/_search
     }
   }
 }
+
+### Prefix/Wildcard/Regexp - SELECT * FROM .. WHERE name LIKE 'sa%';
+# Prefix search
+GET /my-index/_search
+{
+  "query": {
+    "prefix": {
+      "name": {
+        "value": "item"
+      }
+    }
+  }
+}
+
+# Wildcard search
+GET /my-index/_search
+{
+  "query": {
+    "wildcard": {
+      "name": {
+        "value": "*tem1"
+      }
+    }
+  }
+}
+
+# Regex search
+GET /my-index/_search
+{
+  "query": {
+    "regexp": {
+      "name": "it.*"
+    }
+  }
+}
 ```
