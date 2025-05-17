@@ -367,4 +367,53 @@ GET /my-index/_search
     }
   }
 }
+
+
+### Exists - SELECT * FROM ... WHERE .. IS NOT NULL
+GET /my-index/_search
+{
+  "query": {
+    "exists": {
+      "field": "type"
+    }
+  }
+}
+
+
+### Match query - Find documents based on relevance to user's query.
+GET /articles/_search
+{
+  "query": {
+    "match": {
+      "content": "spring"
+    }
+  }
+}
+
+# with fuzziness level
+GET /articles/_search
+{
+  "query": {
+    "match": {
+      "content": {
+        "query": "pring",
+        "fuzziness": "1"
+      }
+    }
+  }
+}
+
+# min prefix to be used for exact match - apply fuzziness only after this prefix length.
+GET /articles/_search
+{
+  "query": {
+    "match": {
+      "content": {
+        "query": "pring",
+        "fuzziness": "1",
+        "prefix_length": 1
+      }
+    }
+  }
+}
 ```
