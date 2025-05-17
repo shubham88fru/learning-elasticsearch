@@ -416,4 +416,16 @@ GET /articles/_search
     }
   }
 }
+
+# Match entire phrase - only those docs that contain the entire phrase - spring boot
+GET /articles/_search
+{
+  "query": {
+    "match_phrase": {
+      "content": {
+        "query": "spring boot"
+      }
+    }
+  }
+}
 ```
