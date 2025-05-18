@@ -428,4 +428,96 @@ GET /articles/_search
     }
   }
 }
+
+# match spring OR season in the body field of any document.
+POST /articles/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "spring season",
+      "fields": ["body"]
+    }
+  }
+}
+
+# match spring AND season in the body and title field of any document.
+POST /articles/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "spring season",
+      "fields": ["body", "title"],
+      "operator": "and"
+    }
+  }
+}
+
+
+### Bool queries
+- Combines multiple queries in a flexible way.
+- It has 4 clauses:
+    - filter
+    - must
+    - must_not
+    - should
+- The patter for these queries is that you'll find normal queries written within then. See e.g. below.
+
+# Products with price less than 100 and rating greater than 4.5
+POST /products/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "range": {
+            "price": {
+              "lte": 100
+            }
+          }
+        },
+        {
+          "range": {
+            "rating": {
+              "gte": 4.5
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+# ...AND brand must not be Nike
+POST /products/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "range": {
+            "price": {
+              "lte": 100
+            }
+          }
+        },
+        {
+          "range": {
+            "rating": {
+              "gte": 4.5
+            }
+          }
+        }
+      ],
+      "must_not": [
+        {
+            "term": {
+              "brand": {
+                "value": "Nike"
+              }
+            }
+        }
+      ]
+    }
+  }
+}
 ```
