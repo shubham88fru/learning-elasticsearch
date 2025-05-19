@@ -460,7 +460,7 @@ POST /articles/_search
     - must
     - must_not
     - should
-- The patter for these queries is that you'll find normal queries written within then. See e.g. below.
+- The pattern for these queries is that you'll find normal queries written within then. See e.g. below.
 
 # Products with price less than 100 and rating greater than 4.5
 POST /products/_search
@@ -515,6 +515,58 @@ POST /products/_search
                 "value": "Nike"
               }
             }
+        }
+      ]
+    }
+  }
+}
+
+
+### E.g. - write a query - I'm looking for either shoes which are below $60 or boots with atleast 4.5 rating.
+GET /products/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "bool": {
+            "filter": [
+              {
+                "range": {
+                  "price": {
+                    "lt": 60
+                  }
+                }
+              }
+            ],
+            "must": [
+              {
+                "match": {
+                  "name": "shoe"
+                }
+              }
+            ]
+          }
+        }, 
+        {
+          "bool": {
+            "filter": [
+              {
+                "range": {
+                  "rating": {
+                    "gte": 4.5
+                  }
+                }
+              }
+            ],
+            "must": [
+              {
+                "match": {
+                  "name": "boots"
+                }
+              }
+            ]
+          }
         }
       ]
     }
