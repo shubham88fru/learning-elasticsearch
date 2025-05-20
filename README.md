@@ -265,6 +265,14 @@ PUT /my-index4
 ### Full text search
 - Elasticsearch provides Query DSL (Domain specific language) to query elasticsearch (Similar to SQL for RDMS)
 - QDSL is in JSON format.
+- Summary:
+  - Query summary -
+    1. String (exact match - often used for filtering)
+       -- ids, term, terms, range, exits, prefix, wildcard, regexp
+    2. Flexible (partial matches, fuzziness, relevance score)
+       -- match, match_phrase, multi_match, query_string
+    3. Compound (combines multiple queries or clauses to form complex condn)
+       -- bool, boosting, dis_max, nested
 
 ```http request
 ### search everything - (like  SELECT * FROM.. in SQL) 
