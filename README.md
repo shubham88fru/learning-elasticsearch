@@ -581,3 +581,43 @@ GET /products/_search
   }
 }
 ```
+
+### Field Selection
+- Selecting specific fields from the result set -> SELECT name, age from CUSTOMER
+```http request
+GET /products/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "_source": ["name"]
+}
+
+# Paginate
+# SQL LIMIT --> size
+# SQL OFFSET --> from
+# pagination - first page with 2 records
+# size = 2
+# `from` is the number of records to skip
+# from = (page-1)*size
+
+# 2 records on first apge.
+GET /products/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 2,
+  "from": 0
+}
+
+# 2 records from second page
+GET /products/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 2,
+  "from": 2
+}
+```
