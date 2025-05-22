@@ -621,3 +621,8 @@ GET /products/_search
   "from": 2
 }
 ```
+
+### Metric aggregation
+```http request
+
+```
