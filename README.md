@@ -622,7 +622,53 @@ GET /products/_search
 }
 ```
 
-### Metric aggregation
+### Aggregation
 ```http request
+# min, max avg etc
+GET /products/_search
+{
+  "aggs": {
+    "price_max": {
+      "max": {
+        "field": "price"
+      }
+    },
+    "price_min": {
+      "min": {
+        "field": "price"
+      }
+    }
+  }
+}
 
+# Get price stats (min, max, avg etc) for products where brand is H&M
+GET /products/_search
+{
+  "query": {
+    "term": {
+      "brand": {
+        "value": "H&M"
+      }
+    }
+  },
+  "aggs": {
+    "price_stats": {
+      "stats": {
+        "field": "price"
+      }
+    }
+  }
+}
+
+# equivalent of group by in sql
+GET /products/_search
+{
+  "aggs": {
+    "group-by-size": {
+      "terms": {
+        "field": "size"
+      }
+    }
+  }
+}
 ```
